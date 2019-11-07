@@ -1,2 +1,79 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
+body,
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+}
+h1,
+h2,
+h3 {
+  font-size: 22px;
+  line-height: 25px;
+  letter-spacing: 0;
+}
+p {
+  margin: 0;
+}
+p.caption {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+p.medium {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 21px;
+}
+.ul-list-repositories li {
+  display: flex;
+  padding: 8px;
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  align-items: center;
+  width: 300px;
+}
+.ul-list-repositories li .repository-owner-icon {
+  height: 50px;
+  width: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.ul-list-repositories li .repository-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 18px;
+  width: 80%;
+}
+.ul-list-repositories li .repository-info p {
+  text-transform: capitalize;
+}
+.ul-list-repositories li .icon-like {
+  margin-right: 18px;
+}
+.icon-like {
+  background-image: url("./icons/ic_like.svg");
+  height: 25px;
+  width: 25px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  -webkit-transition: background-image 0.2s ease-in-out;
+  transition: background-image 0.2s ease-in-out;
+}
+.icon-like:hover {
+  background-image: url("./icons/ic_liked.svg");
+}
+.icon-more {
+  background-image: url("./icons/ic_more.svg");
+  height: 25px;
+  width: 10px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+.star {
+  color: #ffb100;
+}
 
 /*# sourceMappingURL=index.css.map */
