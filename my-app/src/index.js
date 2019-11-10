@@ -116,11 +116,12 @@ class App extends React.Component {
         }else{
             return (
                 <div className="App">
-                    <h1>Hello, React!</h1>
                     <div className="container">
                         <Grid columns={2} divided>
                             <Grid.Row>
                                 <Grid.Column>
+                                    <h1 className=""><span className="color-blue">{this.state.currentGitOwner}</span> top repos</h1>
+
                                     <ul className="ul-list-repositories">
                                         {reposState.map(item =>(
                                             <Repository repository={item} key={item.id} didClickRepository={this.didClickRepository} />
@@ -129,15 +130,25 @@ class App extends React.Component {
                                 </Grid.Column>
                                 <Grid.Column>
                                     <div className="repository-info">
-                                        <h2>{this.state.activeRepositoryState.name}</h2>
-                                        <ul className="pull-requests">
+                                    <h2 className="color-blue ">
+                                            {this.state.activeRepositoryState.name
+                                                ? <a href={this.state.activeRepositoryState.homepage} target="_blank">{this.state.currentGitOwner+'/'+this.state.activeRepositoryState.name} </a>
+                                                : ''}
+                                        </h2>
+                                        <ul className="ul-list-pull-requests">
                                             {pullRequestsState.map(item =>(
-                                                <li key={item.id}>
-                                                    <p>#{item.number}</p>
-                                                    <p>{item.title}</p>
-                                                    <p>{item.user.login}</p>
-                                                    <p>{item.user.state}</p>
-                                                    <Image src={item.user.avatar_url} avatar />
+                                                <li key={item.id} className="pull-request-list-item">
+                                                    <div className="user-icon-number">
+                                                        <Image src={item.user.avatar_url} avatar />
+                                                    </div>
+                                                    <div>
+                                                        <div>
+                                                            <p className="medium">#{item.number}</p>
+                                                        </div>
+                                                        <p className="color-blue">{item.title}</p>
+                                                        <p>{item.user.login}</p>
+                                                        <p>{item.user.state}</p>
+                                                    </div>
                                                 </li>
                                             ))}
                                         </ul>
