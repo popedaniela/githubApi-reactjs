@@ -21,6 +21,19 @@ class Repository extends React.Component{
     handleMoreClick = () =>{
         this.setState({showMoreState: true});
     };
+    handleBookmarkClick = () =>{
+        const bookmarkState = JSON.parse(localStorage.getItem('myBookmarkedRepos')) || [];
+        const bookmarkIndex = bookmarkState.indexOf(this.props.repository.id);
+
+        if (bookmarkIndex < 0) {
+            bookmarkState.push(this.props.repository.id);
+        } else {
+            bookmarkState.splice(bookmarkIndex, 1);
+        }
+        localStorage.setItem('myBookmarkedRepos', JSON.stringify(bookmarkState));
+        this.props.didClickBookmark();
+    };
+
     triggerSeeMoreMenuState = () => {
         this.setState({
             ...this.state,
@@ -30,6 +43,7 @@ class Repository extends React.Component{
     };
 
     render() {
+        const {repository, isBookmarked} = this.props;
         const SeeMoreMenu = props => {
             return (
                 <Menu pointing vertical>
@@ -46,8 +60,12 @@ class Repository extends React.Component{
                     <p>{repository.owner.login}</p>
                     <p>  <Icon name='star' className="start"/> {repository.stargazers_count}</p>
                 </div>
-                <div className="icon-like"></div>
+                {isBookmarked
+                    ? <div className="icon-like filled" onClick={this.handleBookmarkClick}></div>
+                    : <div className="icon-like" onClick={this.handleBookmarkClick}></div>
+                }
                 <div className="icon-more" onClick={this.handleMoreClick}></div>
+                {this.state.showMoreState && <SeeMoreMenu addTrip={this.triggerSeeMoreMenuState} />}
             </li>
         )
     }
@@ -62,11 +80,13 @@ class App extends React.Component {
             errorState: null,
             activeRepositoryState: [],
             pullRequestsState : [],
-
+            currentGitOwner : 'octokit',
+            bookmarkState : JSON.parse(localStorage.getItem('myBookmarkedRepos')) || []
         };
     }
 
     componentDidMount() {
+        const apiUrlRepos = this.apiUrl+'repos';
         axios.get('https://api.github.com/orgs/octokit/repos')
             .then(
                 (response) => {
@@ -87,14 +107,15 @@ class App extends React.Component {
 
     didClickRepository = (repository) =>{
         this.setState({
-            activeRepository : repository
+            activeRepositoryState : repository
         });
         axios.get('https://api.github.com/repos/octokit/'+repository.name+'/pulls')
             .then(
                 (response) => {
                     const pullRequests = response.data;
+                    console.log(pullRequests);
                     this.setState({
-                        pullRequestsState : _.take(response.data, 10),
+                        pullRequestsState : _.take(pullRequests, 10),
                         isLoadedState: true,
                     })
                 },
@@ -107,8 +128,15 @@ class App extends React.Component {
             );
     };
 
+    didClickBookmark = () => {
+        this.setState({
+            bookmarkState : JSON.parse(localStorage.getItem('myBookmarkedRepos')) || []
+        })
+    };
+
     render() {
-        const { errorState, isLoadedState, reposState, pullRequestsState } = this.state;
+        const { errorState, isLoadedState, reposState, pullRequestsState, bookmarkState } = this.state;
+
         if(errorState){
             return <div>Error: {errorState.message}</div>
         }else if(!isLoadedState){
@@ -124,7 +152,7 @@ class App extends React.Component {
 
                                     <ul className="ul-list-repositories">
                                         {reposState.map(item =>(
-                                            <Repository repository={item} key={item.id} didClickRepository={this.didClickRepository} />
+                                            <Repository repository={item} key={item.id} didClickRepository={this.didClickRepository} didClickBookmark={this.didClickBookmarku7m8    } isBookmarked={bookmarkState.indexOf(item.id) !== -1} />
                                         ))}
                                     </ul>
                                 </Grid.Column>
