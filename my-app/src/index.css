@@ -11,6 +11,7 @@ h3 {
   font-size: 22px;
   line-height: 25px;
   letter-spacing: 0;
+  margin-bottom: 2em;
 }
 p {
   margin: 0;
@@ -24,32 +25,14 @@ p.medium {
   font-size: 16px;
   line-height: 21px;
 }
-.ul-list-repositories li {
-  display: flex;
-  padding: 8px;
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
-  margin-bottom: 10px;
-  align-items: center;
-  width: 300px;
+.text-center {
+  text-align: center;
 }
-.ul-list-repositories li .repository-owner-icon {
-  height: 50px;
-  width: 50px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
+ul li {
+  list-style: none;
 }
-.ul-list-repositories li .repository-info {
-  display: flex;
-  flex-direction: column;
-  padding: 0 18px;
-  width: 80%;
-}
-.ul-list-repositories li .repository-info p {
-  text-transform: capitalize;
-}
-.ul-list-repositories li .icon-like {
-  margin-right: 18px;
+.container {
+  padding: 4em;
 }
 .icon-like {
   background-image: url("./icons/ic_like.svg");
@@ -64,6 +47,9 @@ p.medium {
 .icon-like:hover {
   background-image: url("./icons/ic_liked.svg");
 }
+.icon-like.filled {
+  background-image: url("./icons/ic_liked.svg");
+}
 .icon-more {
   background-image: url("./icons/ic_more.svg");
   height: 25px;
@@ -74,6 +60,42 @@ p.medium {
 }
 .star {
   color: #ffb100;
+}
+.color-blue {
+  color: #0b6494;
+}
+.ul-list-repositories li {
+  display: flex;
+  padding: 8px;
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  align-items: center;
+  width: 500px;
+}
+.ul-list-repositories li .repository-owner-icon {
+  height: 50px;
+  width: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.ul-list-repositories li .repository-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 18px;
+  width: 80%;
+}
+.ul-list-repositories li .icon-like {
+  margin-right: 18px;
+}
+.ul-list-pull-requests .pull-request-list-item {
+  margin-bottom: 10px;
+  display: flex;
+  border-bottom: 1px solid #505f66;
+  padding-bottom: 10px;
+}
+.ul-list-pull-requests .pull-request-list-item .user-icon-number {
+  margin-right: 18px;
 }
 
 /*# sourceMappingURL=index.css.map */
