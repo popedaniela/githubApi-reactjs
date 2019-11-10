@@ -3,17 +3,41 @@ import ReactDOM from 'react-dom';
 import axios from 'axios'
 import _ from 'lodash'
 import 'semantic-ui-css/semantic.min.css'
-import {Icon, Grid, Image, Loder, Loader} from 'semantic-ui-react'
+import {Icon, Grid, Image, Loader, Menu} from 'semantic-ui-react'
+
 import './index.css';
 
 class Repository extends React.Component{
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            showMoreState: false,
+        }
+    }
     handleClick = () => {
         this.props.didClickRepository(this.props.repository)
     };
     handleMoreClick = () =>{
+        this.setState({showMoreState: true});
     };
+    triggerSeeMoreMenuState = () => {
+        this.setState({
+            ...this.state,
+            showMoreState: false,
+            isSeeMoreMenuState: true
+        })
+    };
+
     render() {
-        const {repository} = this.props;
+        const SeeMoreMenu = props => {
+            return (
+                <Menu pointing vertical>
+                    <Menu.Item href={repository.homepage} target="_blank">Go to repository</Menu.Item>
+                </Menu>
+            )
+        };
+
         return (
             <li>
                 <div className="repository-owner-icon" style={{backgroundImage: `url(${repository.owner.avatar_url})`}}></div>
