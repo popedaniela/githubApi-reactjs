@@ -16,17 +16,17 @@ gulp.task('default', ['watch']);
  * Will watch SCSS and JS files and compile them on change.
  */
 gulp.task('watch', ['compile-css'], function() {
-    gulp.watch('stylus/**/*.styl', ['compile-css']);
+    gulp.watch('./src/stylus/**/*.styl', ['compile-css']);
 });
 
 gulp.task('compile-css', function () {
 
     return gulp.src([
-        './stylus/index.styl'
+        './src/stylus/index.styl'
     ])
         .pipe(sourcemaps.init())
         .pipe(stylus())
-        .pipe(concat('./index.css'))
+        .pipe(concat('./src/index.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./'));
 });
