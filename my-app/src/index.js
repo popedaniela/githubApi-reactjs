@@ -83,6 +83,8 @@ class App extends React.Component {
             currentGitOwner : 'octokit',
             bookmarkState : JSON.parse(localStorage.getItem('myBookmarkedRepos')) || []
         };
+        //creates a reference for your element to use
+        this.myDivToFocus = React.createRef()
     }
 
     componentDidMount() {
@@ -117,7 +119,16 @@ class App extends React.Component {
                     this.setState({
                         pullRequestsState : _.take(pullRequests, 10),
                         isLoadedState: true,
-                    })
+                    });
+                    //scroll down to pull requests if mobile
+                    let currentWidthScreen = (window.innerWidth < 768);
+                    //.current is verification that your element has rendered
+                    if (currentWidthScreen && this.myDivToFocus.current){
+                        this.myDivToFocus.current.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest"
+                        })
+                    }
                 },
                 (error) => {
                     this.setState({
@@ -157,7 +168,7 @@ class App extends React.Component {
                                     </ul>
                                 </Grid.Column>
                                 <Grid.Column>
-                                    <div className="repository-info">
+                                    <div className="repository-info"  ref={this.myDivToFocus}>
                                     <h2 className="color-blue ">
                                             {this.state.activeRepositoryState.name
                                                 ? <a href={this.state.activeRepositoryState.homepage} target="_blank">{this.state.currentGitOwner+'/'+this.state.activeRepositoryState.name} </a>
