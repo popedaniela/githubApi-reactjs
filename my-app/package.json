@@ -5,18 +5,20 @@
   "main": "gulpfile.js",
   "dependencies": {
     "axios": "^0.19.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "2.x",
+    "gulp-sourcemaps": "2.x",
+    "gulp-stylus": "2.x",
     "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-moment": "^0.9.6",
     "react-scripts": "3.2.0",
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
-    "typescript": "^3.7.2",
-    "gulp": "^3.9.1",
-    "gulp-concat": "2.x",
-    "gulp-sourcemaps": "2.x",
-    "gulp-stylus": "2.x"
+    "typescript": "^3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -76,6 +76,12 @@ ul li {
 .color-blue {
   color: #0b6494;
 }
+.d-flex {
+  display: flex;
+}
+.justify-content-between {
+  justify-content: space-between;
+}
 .ul-list-repositories {
   padding: 0;
 }

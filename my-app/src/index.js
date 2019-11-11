@@ -4,6 +4,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import 'semantic-ui-css/semantic.min.css'
 import {Icon, Grid, Image, Loader, Menu} from 'semantic-ui-react'
+import Moment from 'react-moment'
 
 import './index.css';
 
@@ -81,10 +82,19 @@ class App extends React.Component {
             activeRepositoryState: [],
             pullRequestsState : [],
             currentGitOwner : 'octokit',
-            bookmarkState : JSON.parse(localStorage.getItem('myBookmarkedRepos')) || []
+            bookmarkState : JSON.parse(localStorage.getItem('myBookmarkedRepos')) || [],
+            currentRepoLanguageState : ''
         };
         //creates a reference for your element to use
-        this.myDivToFocus = React.createRef()
+        this.myDivToFocus = React.createRef();
+        this.colorReposObject = [
+            {"language" : "JavaScript", "color": "#f1e05a"},
+            {"language" : "C#", "color": "#178600"},
+            {"language" : "Ruby", "color": "#701516"},
+            {"language" : "TypeScript", "color": "#2b7489"},
+            {"language" : "Objective-C", "color": "#438eff"},
+            {"language" : "Go", "color": "#00ADD8"},
+        ];
     }
 
     componentDidMount() {
@@ -108,9 +118,14 @@ class App extends React.Component {
     }
 
     didClickRepository = (repository) =>{
+        console.log(repository);
         this.setState({
-            activeRepositoryState : repository
+            activeRepositoryState : repository,
+            currentRepoLanguageState : _.find(this.colorReposObject,["language", repository.language])
+        }, ()=>{
+            console.log(this.state.currentRepoLanguageState);
         });
+
         axios.get('https://api.github.com/repos/octokit/'+repository.name+'/pulls')
             .then(
                 (response) => {
@@ -146,7 +161,7 @@ class App extends React.Component {
     };
 
     render() {
-        const { errorState, isLoadedState, reposState, pullRequestsState, bookmarkState } = this.state;
+        const { errorState, isLoadedState, reposState, pullRequestsState, bookmarkState, activeRepositoryState,currentRepoLanguageState } = this.state;
 
         if(errorState){
             return <div>Error: {errorState.message}</div>
@@ -171,9 +186,19 @@ class App extends React.Component {
                                     <div className="repository-info"  ref={this.myDivToFocus}>
                                     <h2 className="color-blue ">
                                             {this.state.activeRepositoryState.name
-                                                ? <a href={this.state.activeRepositoryState.homepage} target="_blank">{this.state.currentGitOwner+'/'+this.state.activeRepositoryState.name} </a>
+                                                ? <a href={activeRepositoryState.homepage} target="_blank">{this.state.currentGitOwner+'/'+activeRepositoryState.name} </a>
                                                 : ''}
                                         </h2>
+                                        <p>{activeRepositoryState.description}</p>
+                                        <div className="d-flex justify-content-between">
+                                            <p><Icon nme="circle" className="circle" style={{color:currentRepoLanguageState.color}} size="small"/> {activeRepositoryState.language}</p>
+                                            <p><Icon name='star' className="start"/> {activeRepositoryState.stargazers_count}</p>
+                                            <p><Icon name='code branch' className="code branch"/> {activeRepositoryState.forks_count}</p>
+                                            <p><Icon name='info circle' className="info circle"/> {activeRepositoryState.open_issues_count}</p>
+                                            <p>Updated  <Moment fromNow>{activeRepositoryState.updated_at}</Moment></p>
+                                        </div>
+
+
                                         <ul className="ul-list-pull-requests">
                                             {pullRequestsState.map(item =>(
                                                 <li key={item.id} className="pull-request-list-item">
