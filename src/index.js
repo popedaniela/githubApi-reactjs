@@ -4,13 +4,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import ReactQueryProvider from './ReactQueryProvider';
+import theme from './theme'
+import { ThemeProvider } from '@mui/material';
 
 ReactDOM.render(
   <React.Fragment>
-    <CssBaseline/>
-    <ReactQueryProvider>
-      <App />
-    </ReactQueryProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
+      <ReactQueryProvider>
+        <App />
+      </ReactQueryProvider>
+    </ThemeProvider>
   </React.Fragment>,
   document.getElementById('root')
 );

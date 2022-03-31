@@ -1,7 +1,9 @@
-import {CircularProgress, Grid, Typography, List} from '@mui/material';
 import Box from '@mui/material/Box';
-import useFetchRepos from './queries';
+import Grid from '@mui/material/Grid';
+import LoadingScreen from 'features/LoadingScreen';
 import Repository from 'features/Repository';
+import Typography from '@mui/material/Typography';
+import useFetchRepos from './queries';
 
 export default function App() {
 	const fetchReposQuery = useFetchRepos();
@@ -11,16 +13,20 @@ export default function App() {
 	}
 
 	if(fetchReposQuery.isLoading) {
-		return <CircularProgress/>
+		return <LoadingScreen/>
 	}
 
 	return (
-	  <Grid container>
-			<Grid item>
+	  <Grid container spacing={2} p={4}>
+			<Grid item xs={12} pb={4}>
 				<Typography variant="h1">Top repositories</Typography>
-				<List>
-					{fetchReposQuery.data.map(repository => <Repository key={repository.id} repository={repository}/>)}
-				</List>
+			</Grid>
+			<Grid item xs={12} spacing={3}>
+				<Grid container  alignItems="end">
+					{fetchReposQuery.data.map(repository => <Grid item xs={12} sm={6} md={4} lg={3}>
+						<Repository key={repository.id} repository={repository}/>
+					</Grid>)}
+				</Grid>
 			</Grid>
 	  </Grid>
 	);
