@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import ReactQueryProvider from './ReactQueryProvider';
-import theme from './theme'
+import theme from './theme';
 import { ThemeProvider } from '@mui/material';
 
 ReactDOM.render(
@@ -12,7 +12,7 @@ ReactDOM.render(
     <ThemeProvider theme={theme}>
       <CssBaseline/>
       <ReactQueryProvider>
-        <App />
+        <App/>
       </ReactQueryProvider>
     </ThemeProvider>
   </React.Fragment>,

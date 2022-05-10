@@ -1,23 +1,31 @@
-import {ListItem, ListItemText, Divider, ListItemAvatar, Avatar} from '@mui/material';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
 import PropTypes from "prop-types";
-import React from 'react'
+import RepositoryLanguage from './RepositoryLanguage';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Typography from '@mui/material/Typography';
 
 export default function Repository({repository}) {
-
-	return <>
-		<ListItem>
-			<ListItemAvatar>
-				<Avatar alt="Remy Sharp" src={repository.owner.avatar_url} />
-			</ListItemAvatar>
-			<ListItemText
-				primary={repository.name}
-				secondary={<>
-					<span>{repository.language}</span>
-				</>}
-			/>
-		</ListItem>
-		<Divider/>
-	</>;
+	return (
+		<Card>
+			<CardHeader title={repository.name}/>
+			<CardContent>
+				<Box display="flex">
+						<Box display="flex">
+							<StarBorderIcon fontSize="small"/>
+							<Typography pl={0.5} variant="body2">
+								{repository.stargazers_count}
+							</Typography>
+						</Box>
+						<Box pl={2}>
+							<RepositoryLanguage language={repository.language}/>
+						</Box>
+				</Box>
+			</CardContent>
+		</Card>
+	);
 }
 
 Repository.propTypes = {
